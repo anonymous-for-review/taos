@@ -21,8 +21,16 @@ MAX_TG_NUM = 5
 JOB_NUM = 250
 SITE_NUM = 100
 
-# HINT: System utilization is defined as JOB_NUM/MAX_ARRIVAL_TU
 MAX_ARRIVAL_TU = 260  # HINT: This should >= JOB_NUM
+
+# HINT: System utilization is used to tune the inter-job arrivals
+UTILIZATION_FACTOR = 0.75
+
+# The parameter for Zipf distribution
+ALPHA = 2
+
+# Setting SCALE_INTER_ARRIVALS \to 0 to make a fierce contention
+SCALE_INTER_ARRIVALS = 0.005
 
 MIN_AS_NUM_FOR_TG = 8
 # HINT: A larger `MAX_AS_NUM_FOR_TG` leads to a better performance of SJF algorithms
@@ -33,9 +41,6 @@ MIN_MU = 3
 # HINT: `MAX_MU` should be small to minimize the affect of intra-job co-execution.
 #  However, a smaller it will lead to a larger computation overhead of order scheduling
 MAX_MU = 5
-
-# The parameter for Zipf distribution
-ALPHA = 1
 
 # In heterogenous mode, the tasks of any job can have different running times
 HOMOGENEOUS_MODE = "HOMOGENEOUS_MODE"
@@ -204,12 +209,13 @@ def from_trace():
     NOTE:
         1. We filter out large task groups (#tasks > 500) since these task groups will be
         outstanding significantly, which makes the comparison less obvious.
-        2. Task durations are derived from the events record
+        2. Task durations and job arrivals are derived from the events record
     """
     # 1. Read from trace
     df = pd.read_table("../trace/batch_task.csv")
 
-    data = {}
+    data = {}  # Save the task group info
+    arrivals = {}  # Save the job arrival times
     job_index = -1
     tg_index = 0
 
@@ -236,12 +242,12 @@ def from_trace():
             id_list.append(job_id)
             job_index += 1
             data[job_index] = {}
+            arrivals[job_index] = int(line[0])
             tg_index = 0
 
         data[job_index][tg_index] = (num_tasks, tg_duration)
         tg_index += 1
 
-    # aver_num_tg = 5.52
     # aver_num_tg = 0
     # for v in data.values():
     #     aver_num_tg += len(v)
@@ -254,9 +260,13 @@ def from_trace():
             NUM_TASKS += v[0]
 
     # 2. Class instance generation
-    # Generate each job's non-repeat arrival time
-    arrivals = np.arange(MAX_ARRIVAL_TU)
-    np.random.shuffle(arrivals)
+    # Scale the arrival intervals with utilization factor
+    # arrivals = np.arange(MAX_ARRIVAL_TU)
+    # np.random.shuffle(arrivals)
+    min_arrival = min(a for a in arrivals.values())
+    for job_index in arrivals.keys():
+        arrivals[job_index] -= min_arrival
+        arrivals[job_index] = int(np.ceil(SCALE_INTER_ARRIVALS * arrivals[job_index] / UTILIZATION_FACTOR))
 
     # Collect the number of task groups for each job
     num_task_groups = [len(v) for v in data.values()]

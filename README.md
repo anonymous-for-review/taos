@@ -13,7 +13,7 @@ We use [Alibaba cluster-trace-v2017]([https://github.com/alibaba/clusterdata/blo
 to drive the simulation. We extract a segment from the file `batch_task.scv` in cluster-trace-v2017 
 that contains 250 jobs. These jobs include 113653 task instances in total. We derive 
 task durations from the timestamps of the recorded task events. We scale the inter-arrival 
-times of the jobs to simulate different levels of system utilization from 50% to 100%. 
+times of the jobs to simulate different levels of system utilization from 50% to 75%. 
 The default number of sites is 100.
 
 The default settings are with `env.py`. You may change the settings at your wish 
@@ -21,11 +21,12 @@ to test the performance and efficiency of the algorithms.
 
 ### Run
 
-You can run ``main.py`` directly to obtain the simulation results in default settings.
+You can run ``main.py`` directly to obtain the simulation results in default settings. 
+You may use the file ``draw/draw.ipynb`` to obtain the figures of average JRTs, CDF of JRTs, etc.
 
 ### Dependencies
 
 See ``requirements.txt``.
 
-The code depends on package `docplex`. You should have a commercial or academic version 
-of CPLEX optimization studio installed, and then install the package `docplex` as guided.
+The code depends on package `docplex`. You should have a **commercial** or **academic** version 
+(NOT the no-cost edition!) of CPLEX optimization studio installed, and then install the package `docplex` as guided.

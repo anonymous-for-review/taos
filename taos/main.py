@@ -12,7 +12,7 @@ from algo import scheduler
 
 
 def save_JRTs(obta_jrts, nlip_jrts, wf_jrts, ocwf_jrts, ocwf_acc_jrts):
-    filename = "JRTs_u{}_zipf{}".format(env.JOB_NUM / env.MAX_ARRIVAL_TU, env.ALPHA)
+    filename = "JRTs_u{}_zipf{}".format(env.UTILIZATION_FACTOR, env.ALPHA)
     with open(filename, "w") as f:
         f.writelines(str(i) + " " for i in obta_jrts)
         f.writelines("\n")
@@ -26,16 +26,16 @@ def save_JRTs(obta_jrts, nlip_jrts, wf_jrts, ocwf_jrts, ocwf_acc_jrts):
         f.writelines("\n")
 
 
-def save_aver_JRT_and_overhead(obta_ret, obta_overheads, nlip_ret, nlip_overheads,
-                               wf_ret, wf_overheads, ocwf_ret, ocwf_overheads,
-                               ocwf_acc_ret, ocwf_acc_overheads):
-    filename = "res_u{}_zipf{}".format(env.MAX_ARRIVAL_TU / env.JOB_NUM, env.ALPHA)
-    with open(filename, "w") as f:
-        f.writelines("{} {}\n".format(obta_ret, sum(obta_overheads) / env.JOB_NUM))
-        f.writelines("{} {}\n".format(nlip_ret, sum(nlip_overheads) / env.JOB_NUM))
-        f.writelines("{} {}\n".format(wf_ret, sum(wf_overheads) / env.JOB_NUM))
-        f.writelines("{} {}\n".format(ocwf_ret, sum(ocwf_overheads) / env.JOB_NUM))
-        f.writelines("{} {}\n".format(ocwf_acc_ret, sum(ocwf_acc_overheads) / env.JOB_NUM))
+# def save_aver_JRT_and_overhead(obta_ret, obta_overheads, nlip_ret, nlip_overheads,
+#                                wf_ret, wf_overheads, ocwf_ret, ocwf_overheads,
+#                                ocwf_acc_ret, ocwf_acc_overheads):
+#     filename = "res_u{}_zipf{}".format(env.UTILIZATION_FACTOR, env.ALPHA)
+#     with open(filename, "w") as f:
+#         f.writelines("{} {}\n".format(obta_ret, sum(obta_overheads) / env.JOB_NUM))
+#         f.writelines("{} {}\n".format(nlip_ret, sum(nlip_overheads) / env.JOB_NUM))
+#         f.writelines("{} {}\n".format(wf_ret, sum(wf_overheads) / env.JOB_NUM))
+#         f.writelines("{} {}\n".format(ocwf_ret, sum(ocwf_overheads) / env.JOB_NUM))
+#         f.writelines("{} {}\n".format(ocwf_acc_ret, sum(ocwf_acc_overheads) / env.JOB_NUM))
 
 
 # ----------------------------------------------------------------------------
