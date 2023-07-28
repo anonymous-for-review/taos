@@ -24,10 +24,10 @@ SITE_NUM = 100
 MAX_ARRIVAL_TU = 260  # HINT: This should >= JOB_NUM
 
 # HINT: System utilization is used to tune the inter-job arrivals
-UTILIZATION_FACTOR = 0.75
+UTILIZATION_FACTOR = 0.5
 
 # The parameter for Zipf distribution
-ALPHA = 2
+ALPHA = 0
 
 # Setting SCALE_INTER_ARRIVALS \to 0 to make a fierce contention
 SCALE_INTER_ARRIVALS = 0.005
