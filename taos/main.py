@@ -80,7 +80,7 @@ env.reset()
 scheduler.info.reset()
 
 print("\nAverage computation overhead:\n")
-print("OBTA: {0}\nNLIP: {1}\nWF: {2}\nOCWF-FULL: {3}\nOCWF-PART: {4}".format(
+print("OBTA: {0}\nNLIP: {1}\nWF: {2}\nOCWF: {3}\nOCWF-ACC: {4}".format(
     sum(obta_overheads) / env.JOB_NUM, sum(nlip_overheads) / env.JOB_NUM,
     sum(wf_overheads) / env.JOB_NUM, sum(ocwf_overheads) / env.JOB_NUM,
     sum(ocwf_acc_overheads) / env.JOB_NUM))

@@ -4,8 +4,8 @@ This repository contains the simulation code of taos (task assignment and order 
 related algorithms.
 
 We implement five algorithms, OBTA, NLIP, WF, OCWF, and OCWF-ACC. The first three algorithms 
-are FIFO algorithms without adjusting outstanding jobs' orders while the last two algorithms 
-are SJF algorithms.
+are First-Come-First-Serve (FIFO) algorithms without adjusting outstanding jobs' orders while the last two algorithms 
+are Shortest-Remaining-Time-First (SRTF) algorithms.
 
 ### Setup
 
@@ -22,7 +22,7 @@ to test the performance and efficiency of the algorithms.
 ### Run
 
 You can run ``taos/main.py`` directly to obtain the simulation results in default settings. 
-The output should similar to:
+The output should be similar to:
 ```text
 ----------------------- Summary -----------------------
 There are 113653 tasks, 250 jobs, 100 sites
@@ -47,8 +47,8 @@ Average computation overhead:
 OBTA: 0.027999222755432127
 NLIP: 0.0643047227859497
 WF: 0.0003121204376220703
-OCWF-FULL: 3.615326265335083
-OCWF-PART: 1.9634334592819214
+OCWF: 3.615326265335083
+OCWF-ACC: 1.9634334592819214
 ```
 You may use the file ``draw/draw.ipynb`` to obtain the figures of average JRTs, CDF of JRTs, etc.
 
@@ -57,4 +57,6 @@ You may use the file ``draw/draw.ipynb`` to obtain the figures of average JRTs, 
 See ``requirements.txt``.
 
 The code depends on package `docplex`. You should have a **commercial** or **academic** version 
-(NOT the no-cost edition!) of CPLEX optimization studio installed, and then install the package `docplex` as guided.
+(NOT the no-cost edition!) of CPLEX optimization studio installed locally (or you have an IBM
+Watson Studio Cloud account), and then install the package `docplex` as guided. The programs are 
+formulated and solved in `taos/algo/common.py`.
